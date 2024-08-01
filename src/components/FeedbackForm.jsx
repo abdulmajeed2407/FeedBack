@@ -43,7 +43,7 @@ function FeedbackForm() {
         text,
         rating,
       }
-
+      console.log(feedbackEdit,'this is in prevent default after submitting');
       if (feedbackEdit.edit === true) {
         updateFeedback(feedbackEdit.item.id, newFeedback)
       } else {

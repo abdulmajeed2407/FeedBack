@@ -1,26 +1,11 @@
 import { v4 as uuidv4 } from 'uuid'
 import { createContext, useState } from 'react'
+import FeedbackData from '../data/FeedbackData'
 
 const FeedbackContext = createContext()
 
 export const FeedbackProvider = ({ children }) => {
-  const [feedback, setFeedback] = useState([
-    {
-      id: 1,
-      text: 'This is feedback item 1',
-      rating: 10,
-    },
-    {
-      id: 2,
-      text: 'This is feedback item 2',
-      rating: 9,
-    },
-    {
-      id: 3,
-      text: 'This is feedback item 3',
-      rating: 7,
-    },
-  ])
+  const [feedback, setFeedback] = useState(FeedbackData)
   const [feedbackEdit, setFeedbackEdit] = useState({
     item: {},
     edit: false,
@@ -28,12 +13,14 @@ export const FeedbackProvider = ({ children }) => {
 
   // Add feedback
   const addFeedback = (newFeedback) => {
+    debugger;
     newFeedback.id = uuidv4()
     setFeedback([newFeedback, ...feedback])
   }
 
   // Delete feedback
   const deleteFeedback = (id) => {
+    debugger;
     if (window.confirm('Are you sure you want to delete?')) {
       setFeedback(feedback.filter((item) => item.id !== id))
     }
@@ -41,13 +28,20 @@ export const FeedbackProvider = ({ children }) => {
 
   // Update feedback item
   const updateFeedback = (id, updItem) => {
+    debugger;
     setFeedback(
-      feedback.map((item) => (item.id === id ? { ...item, ...updItem } : item))
+      feedback.map((item) => (item.id === id ? { ...item, ...updItem } : item)),
     )
+    // Once the update is done clearing the state else after any update done the new functionality will not add any new comment  
+    setFeedbackEdit({
+      item: {},
+      edit: false,
+    })
   }
 
   // Set item to be updated
   const editFeedback = (item) => {
+    debugger;
     setFeedbackEdit({
       item,
       edit: true,
